@@ -1,0 +1,18 @@
+{
+  "aria2_down": "下载文件到本地设备",
+  "aria2_transfer": "将已下载文件传输到相应的存储",
+  "qbit_down": "下载文件到本地设备",
+  "qbit_transfer": "将已下载文件传输到相应的存储",
+  "upload": "将文件上传到相应的存储",
+  "copy": "从一个存储复制文件到另一个存储",
+  "done": "已完成",
+  "undone": "运行中",
+  "pending": "待处理",
+  "running": "运行中",
+  "canceling": "取消中",
+  "succeeded": "已成功",
+  "canceled": "已取消",
+  "errored": "发生错误",
+  "clear_succeeded": "清除已成功任务",
+  "retry": "重试"
+}

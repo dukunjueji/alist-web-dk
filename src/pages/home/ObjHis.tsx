@@ -1,5 +1,7 @@
 import { useColorModeValue, VStack } from "@hope-ui/solid"
 import { createSignal, createEffect } from "solid-js"
+import { UserMethods } from "~/types"
+import { me } from "~/store"
 
 class get {}
 
@@ -55,7 +57,7 @@ function extracted(settings: { times: {} }, setPlayHistory: get) {
       )
     }
     // 倒序链接列表
-    console.log("最后list " + JSON.stringify(historyLastLinks))
+    //console.log("最后list " + JSON.stringify(historyLastLinks))
 
     // @ts-ignore
     setPlayHistory(historyLastLinks.slice().reverse())
@@ -74,7 +76,7 @@ export const ObjHis = () => {
     // 检查 artplayerSettings 是否已定义并且不为 null
     settings = JSON.parse(artplayerSettings)
   }
-
+  //console.log("UserMethods.is_guest(me()" + JSON.stringify(me()));
   // 初始化播放历史
   extracted(settings, setPlayHistory)
 

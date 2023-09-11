@@ -1,0 +1,44 @@
+{
+  "common": {
+    "mount_path": "挂载路径",
+    "mount_path-tips": "您希望挂载的路径，它是唯一的，不能重复",
+    "driver": "驱动程序",
+    "order": "排序",
+    "order-tips": "用于排序",
+    "status": "状态",
+    "remark": "备注",
+    "cache_expiration": "缓存过期",
+    "cache_expiration-tips": "此存储的缓存过期时间（分钟）",
+    "down_proxy_url": "下载代理 URL",
+    "web_proxy": "Web 代理",
+    "webdav_policy": "WebDAV 策略",
+    "webdav_policys": {
+      "302_redirect": "302 重定向",
+      "use_proxy_url": "使用代理 URL",
+      "native_proxy": "本地代理"
+    },
+    "order_by": "排序方式",
+    "order_bys": {
+      "name": "名称",
+      "size": "大小",
+      "modified": "修改日期"
+    },
+    "order_direction": "排序方向",
+    "order_directions": {
+      "asc": "升序",
+      "desc": "降序"
+    },
+    "extract_folder": "提取文件夹",
+    "extract_folders": {
+      "front": "提取到前面",
+      "back": "提取到后面"
+    },
+    "enable_sign": "启用签名"
+  },
+  "other": {
+    "start_load_success": "开始加载",
+    "load_all": "重新加载全部",
+    "filter_by_driver": "按驱动程序筛选",
+    "table_layout": "表格布局"
+  }
+}
