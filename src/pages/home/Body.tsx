@@ -3,6 +3,8 @@ import { Nav } from "./Nav"
 import { Obj } from "./Obj"
 import { Readme } from "./Readme"
 import { Container } from "./Container"
+import { NavHis } from "./NavHis"
+import { ObjHis } from "./ObjHis"
 
 export const Body = () => {
   return (
@@ -18,6 +20,8 @@ export const Body = () => {
       >
         <Nav />
         <Obj />
+        <NavHis />
+        <ObjHis />
         <Readme />
       </VStack>
     </Container>

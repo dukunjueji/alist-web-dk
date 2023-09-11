@@ -10,6 +10,8 @@ import Hls from "hls.js"
 import { currentLang } from "~/app/i18n"
 import { VideoBox } from "./video_box"
 
+Artplayer.AUTO_PLAYBACK_MAX = 200
+
 export interface Data {
   drive_id: string
   file_id: string
@@ -74,6 +76,10 @@ const Preview = () => {
       // @ts-ignore
       "webkit-playsinline": true,
       playsInline: true,
+    },
+    headers: {
+      "User-Agent": "Custom User Agent",
+      Referer: "https://www.aliyundrive.com/",
     },
     type: "m3u8",
     customType: {
@@ -167,6 +173,9 @@ const Preview = () => {
         }
       })
       player = new Artplayer(option)
+      // player.on('ready', () => {
+      //   player.currentTime = 5;
+      // });
       player.on("video:ended", () => {
         if (!autoNext()) return
         const index = videos.findIndex((f) => f.name === objStore.obj.name)
@@ -174,6 +183,24 @@ const Preview = () => {
           replace(videos[index + 1].name)
         }
       })
+      // player.on("video:seeked", () => {
+      //     console.log(`当前跳转播放时间：${player.currentTime}秒`)
+      // })
+      // player.on("video:timeupdate", () => {
+      //     // 获取当前播放时间
+      //     const currentTime = player.currentTime;
+      //
+      //     // 获取视频总时长
+      //     const duration = player.duration;
+      //
+      //     // 计算播放进度（百分比）
+      //     const progress = (currentTime / duration) * 100;
+      //
+      //     // 在这里你可以执行自定义的播放进度相关操作
+      //     console.log(`当前播放时间：${currentTime}秒`);
+      //     console.log(`视频总时长：${duration}秒`);
+      //     console.log(`播放进度：${progress}%`);
+      // })
       // Fixed subtitle loss when switching videos with different resolutions
       if (subtitle) {
         player.on("video:play", (_url) => {

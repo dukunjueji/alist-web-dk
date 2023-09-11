@@ -11,7 +11,7 @@ import flvjs from "flv.js"
 import Hls from "hls.js"
 import { currentLang } from "~/app/i18n"
 import { VideoBox } from "./video_box"
-
+Artplayer.AUTO_PLAYBACK_MAX = 200
 const Preview = () => {
   const { replace, pathname } = useRouter()
   const { proxyLink } = useLink()
