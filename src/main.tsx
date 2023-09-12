@@ -5,7 +5,6 @@ import { render } from "solid-js/web"
 import { Index } from "./app"
 
 declare global {
-  
   interface Window {
     [key: string]: any
   }
