@@ -2,7 +2,9 @@ import { useColorModeValue, VStack } from "@hope-ui/solid"
 import { createSignal, createEffect } from "solid-js"
 import { UserMethods } from "~/types"
 import { me } from "~/store"
-
+import { handleResp, notify, r } from "~/utils"
+import { PPageResp, User } from "../../types"
+import { useFetch } from "../../hooks"
 class get {}
 
 // 匹配路径部分（不包括文件名）
@@ -76,7 +78,18 @@ export const ObjHis = () => {
     // 检查 artplayerSettings 是否已定义并且不为 null
     settings = JSON.parse(artplayerSettings)
   }
-  //console.log("UserMethods.is_guest(me()" + JSON.stringify(me()));
+  // const [getUsersLoading, getUsers] = useFetch(
+  //     (): PPageResp<User> => r.get("/admin/user/list"),
+  // )
+
+  //  const refresh = async () => {
+  //    const resp = await getUsers()
+  //    handleResp(resp, (data) =>  console.log("UserMethods.is_guest(me()" + JSON.stringify(data.content)))
+  //  }
+  //  refresh()
+  // ;
+
+  //console.log("UserMethods.is_guest(me()" + JSON.stringify(getUsersLoading));
   // 初始化播放历史
   extracted(settings, setPlayHistory)
 
