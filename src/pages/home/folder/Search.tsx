@@ -300,11 +300,11 @@ const Search = () => {
         <ModalCloseButton />
         <ModalHeader>近期热门电视</ModalHeader>
 
-        <ModalHeader>
+        <ModalBody>
           <For each={linkText}>
             {(obj, i) => {
               // @ts-ignore
-              if (i() < 30) {
+              if (i() < 15) {
                 return (
                   <Tag
                     variant="dot"
@@ -317,8 +317,7 @@ const Search = () => {
               }
             }}
           </For>
-        </ModalHeader>
-        <ModalBody>
+          <ModalHeader></ModalHeader>
           <VStack w="$full" spacing="$2">
             <HStack w="$full" spacing="$2">
               <SelectWrapper
