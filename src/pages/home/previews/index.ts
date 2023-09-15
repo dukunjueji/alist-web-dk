@@ -26,12 +26,12 @@ const previews: Preview[] = [
     provider: /^Aliyundrive(Open)?$/,
     component: lazy(() => import("./aliyun_video")),
   },
-    {
-      name: "Aliyun Video Previewer",
-      type: ObjType.VIDEO,
-      provider: /^Aliyundrive(Share)?$/,
-      component: lazy(() => import("./aliyun_video")),
-    },
+  {
+    name: "Aliyun Video Previewer",
+    type: ObjType.VIDEO,
+    provider: /^Aliyundrive(Share)?$/,
+    component: lazy(() => import("./aliyun_video")),
+  },
   {
     name: "Markdown",
     type: ObjType.TEXT,
