@@ -14,11 +14,18 @@ import {
   Text,
   VStack,
   hope,
+  UnorderedList,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+  TagLeftIcon,
+  TagRightIcon,
 } from "@hope-ui/solid"
 import { BsSearch } from "solid-icons/bs"
 import {
   createSignal,
   For,
+  JSX,
   Match,
   onCleanup,
   onMount,
@@ -42,9 +49,14 @@ import {
   handleResp,
   hoverColor,
   pathJoin,
+  r,
 } from "~/utils"
 import { isMac } from "~/utils/compatibility"
 import { getIconByObj } from "~/utils/icon"
+import { NavHis } from "../NavHis"
+import { ObjHis } from "../ObjHis"
+import { ListItem } from "./ListItem"
+import { PPageResp, User } from "../../../types"
 
 // class MarkKeywords {
 //   root
@@ -177,6 +189,7 @@ const SearchResult = (props: { node: SearchNode; keywords: string }) => {
   )
 }
 
+let linkText: []
 const Search = () => {
   const pageSize = 100
   const { isOpen, onOpen, onClose, onToggle } = createDisclosure()
@@ -187,6 +200,29 @@ const Search = () => {
     }
   }
   bus.on("tool", handler)
+
+  const [, hotSearch] = useFetch(
+    (): PPageResp<any> => r.get("/public/hotSearch"),
+  )
+  const getHotSearch = async () => {
+    const resp = await hotSearch()
+    handleResp(resp, (data) => {
+      linkText = data.data
+      for (const item of linkText) {
+        // 遍历数组中的元素并进行处理
+        console.log(item)
+      }
+    })
+  }
+  if (linkText == null || linkText.length == 0) {
+    getHotSearch()
+  }
+
+  function handleTagClick(linkText: any) {
+    setKeywords(linkText)
+    search()
+  }
+
   const searchEvent = (e: KeyboardEvent) => {
     if ((e.ctrlKey || (isMac && e.metaKey)) && e.key.toLowerCase() === "k") {
       e.preventDefault()
@@ -241,6 +277,10 @@ const Search = () => {
       setData(data)
     })
   }
+  // @ts-ignore
+  // @ts-ignore
+  // @ts-ignore
+  // @ts-ignore
   return (
     <Modal
       // blockScrollOnMount={false}
@@ -256,9 +296,28 @@ const Search = () => {
       scrollBehavior="inside"
     >
       <ModalOverlay bg="$blackAlpha5" />
-      <ModalContent mx="$2">
+      <ModalContent mx="$1">
         <ModalCloseButton />
-        <ModalHeader>{t("home.search.search")}</ModalHeader>
+        <ModalHeader>近期热门电视</ModalHeader>
+
+        <ModalHeader>
+          <For each={linkText}>
+            {(obj, i) => {
+              // @ts-ignore
+              if (i() < 30) {
+                return (
+                  <Tag
+                    variant="dot"
+                    colorScheme="accent"
+                    onClick={() => handleTagClick(obj.title)}
+                  >
+                    {obj.title} {obj.upinfo}
+                  </Tag>
+                )
+              }
+            }}
+          </For>
+        </ModalHeader>
         <ModalBody>
           <VStack w="$full" spacing="$2">
             <HStack w="$full" spacing="$2">
