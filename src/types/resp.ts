@@ -7,6 +7,7 @@ export interface Resp<T> {
 }
 
 export type PageResp<T> = Resp<{
+  data: any
   content: T[]
   total: number
 }>
