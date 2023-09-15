@@ -189,7 +189,6 @@ const SearchResult = (props: { node: SearchNode; keywords: string }) => {
   )
 }
 
-let linkText: []
 const Search = () => {
   const pageSize = 100
   const { isOpen, onOpen, onClose, onToggle } = createDisclosure()
@@ -200,21 +199,22 @@ const Search = () => {
     }
   }
   bus.on("tool", handler)
-
+  let [hotSearchRes, setHotSearchRes] = createSignal([])
   const [, hotSearch] = useFetch(
     (): PPageResp<any> => r.get("/public/hotSearch"),
   )
   const getHotSearch = async () => {
     const resp = await hotSearch()
     handleResp(resp, (data) => {
-      linkText = data.data
-      for (const item of linkText) {
+      setHotSearchRes(data.data)
+      // @ts-ignore
+      for (const item of hotSearchRes) {
         // 遍历数组中的元素并进行处理
         console.log(item)
       }
     })
   }
-  if (linkText == null || linkText.length == 0) {
+  if (hotSearchRes == null || hotSearchRes.length == 0) {
     getHotSearch()
   }
 
@@ -295,13 +295,19 @@ const Search = () => {
       initialFocus="#search-input"
       scrollBehavior="inside"
     >
-      <ModalOverlay bg="$blackAlpha5" />
+      <ModalOverlay
+        bg="$blackAlpha5"
+        css={{
+          backdropFilter: "blur(10px) hue-rotate(90deg)",
+        }}
+      />
       <ModalContent mx="$1">
         <ModalCloseButton />
-        <ModalHeader>近期热门电视</ModalHeader>
-
+        <ModalHeader>
+          <a style={{ color: "blue" }}>近期热门</a>
+        </ModalHeader>
         <ModalBody>
-          <For each={linkText}>
+          <For each={hotSearchRes()}>
             {(obj, i) => {
               // @ts-ignore
               if (i() < 15) {
@@ -317,7 +323,7 @@ const Search = () => {
               }
             }}
           </For>
-          <ModalHeader></ModalHeader>
+          <ModalBody></ModalBody>
           <VStack w="$full" spacing="$2">
             <HStack w="$full" spacing="$2">
               <SelectWrapper
