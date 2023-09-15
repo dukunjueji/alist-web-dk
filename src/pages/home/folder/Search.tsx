@@ -20,6 +20,7 @@ import {
   TagLabel,
   TagLeftIcon,
   TagRightIcon,
+  Button,
 } from "@hope-ui/solid"
 import { BsSearch } from "solid-icons/bs"
 import {
@@ -188,8 +189,9 @@ const SearchResult = (props: { node: SearchNode; keywords: string }) => {
     </HStack>
   )
 }
-
+let tempList: []
 const Search = () => {
+  const [hotSearchRes, setHotSearchRes] = createSignal([])
   const pageSize = 100
   const { isOpen, onOpen, onClose, onToggle } = createDisclosure()
   const t = useT()
@@ -199,23 +201,25 @@ const Search = () => {
     }
   }
   bus.on("tool", handler)
-  let [hotSearchRes, setHotSearchRes] = createSignal([])
   const [, hotSearch] = useFetch(
-    (): PPageResp<any> => r.get("/public/hotSearch"),
+    (cat): PPageResp<any> => r.get("/public/hotSearch?cat=" + cat),
   )
-  const getHotSearch = async () => {
-    const resp = await hotSearch()
+  const getHotSearch = async (param: string) => {
+    // 接受参数
+    const resp = await hotSearch(param) // 传递参数
     handleResp(resp, (data) => {
+      tempList = data.data
       setHotSearchRes(data.data)
-      // @ts-ignore
-      for (const item of hotSearchRes) {
-        // 遍历数组中的元素并进行处理
+      for (const item of data.data) {
+        // 处理数据
         console.log(item)
       }
     })
   }
-  if (hotSearchRes == null || hotSearchRes.length == 0) {
-    getHotSearch()
+  if (tempList == null || tempList.length == 0) {
+    getHotSearch("1")
+  } else {
+    setHotSearchRes(tempList)
   }
 
   function handleTagClick(linkText: any) {
@@ -307,6 +311,30 @@ const Search = () => {
           <a style={{ color: "blue" }}>近期热门</a>
         </ModalHeader>
         <ModalBody>
+          <HStack spacing="$2">
+            <Button
+              size="sm"
+              colorScheme="primary"
+              onClick={() => getHotSearch("3")}
+            >
+              电视剧
+            </Button>
+            <Button
+              size="sm"
+              colorScheme="accent"
+              onClick={() => getHotSearch("2")}
+            >
+              电影
+            </Button>
+            <Button
+              size="sm"
+              colorScheme="neutral"
+              onClick={() => getHotSearch("4")}
+            >
+              综艺
+            </Button>
+          </HStack>
+          <ModalBody></ModalBody>
           <For each={hotSearchRes()}>
             {(obj, i) => {
               // @ts-ignore
