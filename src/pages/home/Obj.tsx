@@ -1,4 +1,4 @@
-import { useColorModeValue, VStack } from "@hope-ui/solid"
+import { HStack, useColorModeValue, VStack, Image } from "@hope-ui/solid"
 import { Suspense, Switch, Match, lazy, createEffect, on } from "solid-js"
 import { FullLoading, Error } from "~/components"
 import { resetGlobalPage, useObjTitle, usePath, useRouter } from "~/hooks"

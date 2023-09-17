@@ -21,6 +21,7 @@ import {
   TagLeftIcon,
   TagRightIcon,
   Button,
+  Box,
 } from "@hope-ui/solid"
 import { BsSearch } from "solid-icons/bs"
 import {
@@ -201,19 +202,21 @@ const Search = () => {
     }
   }
   bus.on("tool", handler)
-  const [, hotSearch] = useFetch(
+  const [loadingHot, hotSearch] = useFetch(
     (cat): PPageResp<any> => r.get("/public/hotSearch?cat=" + cat),
   )
   const getHotSearch = async (param: string) => {
+    setHotSearchRes([])
     // 接受参数
     const resp = await hotSearch(param) // 传递参数
+    if (loadingHot()) return
     handleResp(resp, (data) => {
       tempList = data.data
       setHotSearchRes(data.data)
-      for (const item of data.data) {
-        // 处理数据
-        console.log(item)
-      }
+      // for (const item of data.data) {
+      //   // 处理数据
+      //   console.log(item)
+      // }
     })
   }
   if (tempList == null || tempList.length == 0) {
@@ -333,8 +336,27 @@ const Search = () => {
             >
               综艺
             </Button>
+            <Button
+              size="sm"
+              colorScheme="success"
+              onClick={() => getHotSearch("5")}
+            >
+              动漫
+            </Button>
+            <Button
+              size="sm"
+              colorScheme="info"
+              onClick={() => getHotSearch("6")}
+            >
+              儿童
+            </Button>
           </HStack>
           <ModalBody></ModalBody>
+          <Switch>
+            <Match when={loadingHot()}>
+              <FullLoading />
+            </Match>
+          </Switch>
           <For each={hotSearchRes()}>
             {(obj, i) => {
               // @ts-ignore
